@@ -1,0 +1,3 @@
+*.db-journal
+.ipynb_checkpoints/
+
