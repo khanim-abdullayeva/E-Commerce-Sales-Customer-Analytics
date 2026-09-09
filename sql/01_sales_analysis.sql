@@ -6,8 +6,7 @@ from sales s
 left join products p
 on s.ProductKey = p.ProductKey)
 
-select "Order Number", sum(Quantity * "Gross Profit USD") as "Total Profit USD"
+select *
 from Joined1
-group by "Order Number"
-order by "Total Profit USD" desc
+
 
