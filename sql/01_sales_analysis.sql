@@ -80,7 +80,10 @@ WITH order_summary AS (
     GROUP BY "Order Number"
 )
 
--- Total Profit vs Total Revenue analysis
+SELECT * FROM order_summary
+ORDER BY "Total Line Item" DESC
+
+-- Summarizes each order by total line items and total profit
 
 
 SELECT Category, ROUND(SUM(Quantity * (REPLACE(REPLACE("Unit Price USD", "$",""), ",","") - REPLACE(REPLACE("Unit Cost USD", "$",""), ",","")))/ 
@@ -89,6 +92,35 @@ FROM sales_analysis
 GROUP BY Category
 
 -- Profit Margin by Category = Total Profit / Total Revenue × 100 
+
+SELECT 
+    Category,
+    SUM(Quantity) AS "Total Quantity",
+    SUM(Quantity * REPLACE(REPLACE("Unit Price USD", "$", ""),",","")) AS "Total Revenue"
+FROM sales_analysis
+GROUP BY Category
+ORDER BY "Total Revenue" DESC;
+
+/*
+Revenue was not directly proportional to quantity sold.
+Some categories generated relatively high revenue despite having lower sales volume,
+suggesting higher average selling prices per unit.
+*/
+
+
+WITH order_sales AS (
+    SELECT
+        "Order Number",
+        SUM(Quantity * REPLACE(REPLACE("Unit Price USD", "$", ""),",","")) AS "Order Revenue"
+    FROM sales_analysis
+    GROUP BY "Order Number"
+)
+
+SELECT 
+    ROUND(AVG("Order Revenue"),2) AS "Average Order Value"
+FROM order_sales;
+
+-- Calculates the average revenue generated per order
 
 
 SELECT 
