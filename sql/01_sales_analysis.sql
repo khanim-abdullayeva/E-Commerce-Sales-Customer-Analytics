@@ -80,6 +80,17 @@ WITH order_summary AS (
     GROUP BY "Order Number"
 )
 
+-- Total Profit vs Total Revenue analysis
+
+
+SELECT Category, ROUND(SUM(Quantity * (REPLACE(REPLACE("Unit Price USD", "$",""), ",","") - REPLACE(REPLACE("Unit Cost USD", "$",""), ",","")))/ 
+SUM(Quantity * REPLACE(REPLACE("Unit Price USD", "$", ""),",","")) *100,2) as "Profit Margin by Category"
+FROM sales_analysis
+GROUP BY Category
+
+-- Profit Margin by Category = Total Profit / Total Revenue × 100 
+
+
 SELECT 
     "Total Line Item",
     COUNT(*) AS "Order Count",
