@@ -112,7 +112,7 @@ suggesting higher average selling prices per unit.
 WITH order_sales AS (
     SELECT
         "Order Number",
-        SUM(Quantity * REPLACE(REPLACE("Unit Price USD", "$", ""),",","")) AS "Order Revenue"
+        SUM(Quantity * "Unit Price USD") AS "Order Revenue"
     FROM sales_analysis
     GROUP BY "Order Number"
 )
