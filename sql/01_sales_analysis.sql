@@ -97,7 +97,7 @@ GROUP BY Category
 SELECT 
     Category,
     SUM(Quantity) AS "Total Quantity",
-    SUM(Quantity * REPLACE(REPLACE("Unit Price USD", "$", ""),",","")) AS "Total Revenue"
+    SUM(Quantity * "Unit Price USD") AS "Total Revenue"
 FROM sales_analysis
 GROUP BY Category
 ORDER BY "Total Revenue" DESC;
