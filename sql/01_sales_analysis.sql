@@ -26,7 +26,7 @@ ORDER BY "Total Revenue" DESC
 SELECT s.*,p."Category" FROM 
 (SELECT 
 	"Product Name", 
-	SUM(Quantity * "Unit Price USD", "$", "") AS "Total Revenue"
+	SUM(Quantity * "Unit Price USD") AS "Total Revenue"
 FROM sales_analysis 
 GROUP BY "Product Name"
 ORDER BY "Total Revenue" DESC) AS s
@@ -36,8 +36,8 @@ on s."Product Name" = p."Product Name"
 
 SELECT 
     "Product Name",
-    SUM(Quantity * REPLACE(REPLACE("Unit Price USD", "$", ""),",","")) AS "Total Revenue",
-    SUM(Quantity * (REPLACE(REPLACE("Unit Price USD", "$",""), ",","") - REPLACE(REPLACE("Unit Cost USD", "$",""), ",",""))) AS "Total Profit"
+    SUM(Quantity * "Unit Price USD") AS "Total Revenue",
+    SUM(Quantity * "Unit Price USD"-"Unit Cost USD") AS "Total Profit"
 FROM sales_analysis
 GROUP BY "Product Name"
 ORDER BY "Total Profit" DESC
