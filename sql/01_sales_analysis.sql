@@ -2,18 +2,19 @@
 DROP TABLE IF EXISTS sales_analysis;
 
 CREATE TEMP TABLE sales_analysis AS
-SELECT s.*,
-REPLACE(REPLACE("Unit Price USD", "$",""), ",","") - REPLACE(REPLACE("Unit Cost USD", "$",""), ",","") AS "Gross Profit USD",
+SELECT s.*, CAST(REPLACE(REPLACE("Unit Price USD", "$",""), ",","") AS DECIMAL) AS "Unit Price USD",
+CAST(REPLACE(REPLACE("Unit Cost USD", "$",""), ",","") AS DECIMAL) AS "Unit Cost USD",
+CAST(REPLACE(REPLACE("Unit Price USD", "$",""), ",","") - REPLACE(REPLACE("Unit Cost USD", "$",""), ",","") AS DECIMAL) AS "Gross Profit USD",
 p.Category,p."Product Name",p."Unit Price USD",p."Unit Cost USD"
 FROM sales s
 LEFT JOIN products p
 ON s.ProductKey = p.ProductKey
 
 
-SELECT SUM(Quantity * REPLACE("Unit Price USD", "$", "")) AS "Total Revenue"
+SELECT SUM(Quantity * "Unit Price USD") AS "Total Revenue"
 FROM sales_analysis
 
--- Total Revenue : 43,212,329.17 $
+-- Total Revenue : 55,755,479.59 $
 
 SELECT Category, SUM(Quantity * REPLACE("Unit Price USD", "$", "")) AS "Total Revenue"
 FROM sales_analysis
