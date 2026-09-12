@@ -16,7 +16,7 @@ FROM sales_analysis
 
 -- Total Revenue : 55,755,479.59 $
 
-SELECT Category, SUM(Quantity * REPLACE("Unit Price USD", "$", "")) AS "Total Revenue"
+SELECT Category, SUM(Quantity * "Unit Price USD") AS "Total Revenue"
 FROM sales_analysis
 GROUP BY Category
 ORDER BY "Total Revenue" DESC
