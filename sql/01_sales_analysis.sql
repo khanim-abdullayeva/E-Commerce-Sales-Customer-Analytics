@@ -21,12 +21,12 @@ FROM sales_analysis
 GROUP BY Category
 ORDER BY "Total Revenue" DESC
 
--- The product category that generated the highest revenue was Computers, with 16,077,227.46 $ in total
+-- The product category that generated the highest revenue was Computers, with 19,301,595.46 $ in total
 
 SELECT s.*,p."Category" FROM 
 (SELECT 
 	"Product Name", 
-	SUM(Quantity * REPLACE("Unit Price USD", "$", "")) AS "Total Revenue"
+	SUM(Quantity * "Unit Price USD", "$", "") AS "Total Revenue"
 FROM sales_analysis 
 GROUP BY "Product Name"
 ORDER BY "Total Revenue" DESC) AS s
