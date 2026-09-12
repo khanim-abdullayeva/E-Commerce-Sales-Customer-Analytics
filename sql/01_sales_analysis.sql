@@ -87,8 +87,8 @@ ORDER BY "Total Line Item" DESC
 -- Summarizes each order by total line items and total profit
 
 
-SELECT Category, ROUND(SUM(Quantity * (REPLACE(REPLACE("Unit Price USD", "$",""), ",","") - REPLACE(REPLACE("Unit Cost USD", "$",""), ",","")))/ 
-SUM(Quantity * REPLACE(REPLACE("Unit Price USD", "$", ""),",","")) *100,2) as "Profit Margin by Category"
+SELECT Category, ROUND(SUM(Quantity * ("Unit Price USD" - "Unit Cost USD"))/ 
+SUM(Quantity * "Unit Price USD") *100,2) as "Profit Margin by Category"
 FROM sales_analysis
 GROUP BY Category
 
